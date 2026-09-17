@@ -1,0 +1,33 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+    background: #f4f4f4;
+    margin: 0;
+}
+#container {
+    width: 400px;
+}
+#newBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+#ft_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.todo-item {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    cursor: pointer;
+    word-break: break-word;
+}
+.todo-item:hover {
+    background: #ffecec;
+}

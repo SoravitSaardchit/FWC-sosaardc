@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    background: #f4f4f4;
+}
+
+.navbar {
+    background: #862334; /* rouge SNCF */
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.menu-title {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 15px;
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 200px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.dropdown-content li a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-content li a:hover {
+    background: #f0d9dc;
+    color: #862334;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}

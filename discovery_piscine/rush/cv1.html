@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oak — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12151F;
+    --paper:#F5F2EA;
+    --gold:#E8A33D;
+    --surface:#1D2233;
+    --card:#F0EEE6;
+    --muted:#8B93A8;
+    --text-dark:#1A1F2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--text-dark);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(18,21,31,0.94);
+    backdrop-filter:blur(8px);
+  }
+  .nav-inner{
+    max-width:900px;
+    margin:0 auto;
+    padding:0.9rem 1.5rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+  }
+  .nav-left{
+    display:flex;
+    align-items:center;
+    gap:1.4rem;
+  }
+  .nav-back{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:0.88rem;
+    white-space:nowrap;
+    transition:color 0.2s ease;
+  }
+  .nav-back:hover{ color:var(--gold); }
+  .nav-brand{
+    font-family:'Fraunces',serif;
+    color:var(--gold);
+    font-size:1.05rem;
+  }
+  .nav-links{
+    list-style:none;
+    display:flex;
+    gap:1.6rem;
+  }
+  .nav-links a{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:0.9rem;
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color:var(--gold); }
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:none;
+    color:var(--paper);
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  @media (max-width:640px){
+    .nav-links{
+      position:absolute;
+      top:100%; left:0; right:0;
+      background:var(--ink);
+      flex-direction:column;
+      gap:0;
+      max-height:0;
+      overflow:hidden;
+      transition:max-height 0.25s ease;
+    }
+    .nav-links.open{ max-height:260px; }
+    .nav-links a{ display:block; padding:0.9rem 1.5rem; border-top:1px solid var(--surface); }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:9rem 1.5rem 3.5rem 1.5rem;
+  }
+  .hero-inner{
+    max-width:900px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:2rem;
+    align-items:center;
+  }
+  @media (max-width:700px){
+    .hero-inner{ grid-template-columns:1fr; text-align:center; }
+    .hero-photo-wrap{ order:-1; }
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(1.4rem,3vw,1.6rem);
+    line-height:1.2;
+  }
+  h1 .name{
+    display:block;
+    color:var(--gold);
+    font-weight:700;
+    font-size:clamp(2.2rem,5vw,2.8rem);
+    margin-top:0.2rem;
+  }
+  .role{
+    font-size:1.05rem;
+    margin:1rem 0 0.6rem 0;
+  }
+  .desc{
+    color:var(--muted);
+    font-size:0.95rem;
+    max-width:44ch;
+  }
+  @media (max-width:700px){ .desc{ margin:0 auto; } }
+  .hero-cta{
+    display:flex;
+    gap:0.8rem;
+    margin-top:1.6rem;
+    flex-wrap:wrap;
+  }
+  @media (max-width:700px){ .hero-cta{ justify-content:center; } }
+  .btn{
+    padding:0.75rem 1.4rem;
+    border-radius:4px;
+    text-decoration:none;
+    font-size:0.9rem;
+    font-weight:600;
+  }
+  .btn-primary{ background:var(--gold); color:#1A1200; }
+  .btn-outline{ border:1px solid var(--muted); color:var(--paper); }
+  .hero-social{
+    display:flex;
+    gap:1rem;
+    margin-top:1.6rem;
+  }
+  @media (max-width:700px){ .hero-social{ justify-content:center; } }
+  .hero-social a{ color:var(--paper); opacity:0.8; text-decoration:none; font-size:0.9rem; }
+  .hero-social a:hover{ opacity:1; color:var(--gold); }
+  .hero-photo-wrap{ text-align:center; }
+  .hero-photo{
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    border:2px solid var(--gold);
+    object-fit:cover;
+  }
+  .hero-quote{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    color:var(--muted);
+    font-size:0.95rem;
+    margin-top:1rem;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    max-width:900px;
+    margin:0 auto;
+    padding:4.5rem 1.5rem;
+    scroll-margin-top:70px;
+  }
+  h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin-bottom:2rem;
+    border-bottom:3px solid var(--gold);
+    display:inline-block;
+    padding-bottom:0.2rem;
+  }
+
+  /* About */
+  .about-grid{
+    display:grid;
+    grid-template-columns:200px 1fr 220px;
+    gap:2rem;
+    align-items:start;
+  }
+  @media (max-width:750px){
+    .about-grid{ grid-template-columns:1fr; }
+  }
+  .about-photo{
+    width:200px;
+    height:200px;
+    border-radius:6px;
+    object-fit:cover;
+  }
+  .about-text p{ margin-bottom:1.1rem; color:#3a4155; }
+  .meta-row{
+    display:flex;
+    gap:0.8rem;
+    margin-bottom:1.1rem;
+  }
+  .meta-icon{ font-size:1.1rem; }
+  .meta-label{ font-weight:600; font-size:0.92rem; }
+  .meta-value{ color:#5a6178; font-size:0.9rem; }
+  .about-quote{
+    background:var(--card);
+    border-radius:6px;
+    padding:1.6rem;
+    font-size:0.98rem;
+    position:relative;
+  }
+  .about-quote .rule{
+    width:40px; height:2px; background:var(--gold); margin-top:0.8rem;
+  }
+
+  /* Skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1rem;
+  }
+  @media (max-width:750px){ .skills-grid{ grid-template-columns:repeat(2,1fr); } }
+  .skill-card{
+    background:var(--card);
+    border-radius:6px;
+    padding:1.5rem 1rem;
+    text-align:center;
+  }
+  .skill-icon{ font-size:1.6rem; margin-bottom:0.6rem; }
+  .skill-title{ font-weight:600; font-size:0.92rem; margin-bottom:0.4rem; }
+  .skill-desc{ color:#5a6178; font-size:0.82rem; }
+
+  /* Education */
+  .edu-row{
+    display:grid;
+    grid-template-columns:1fr 260px;
+    gap:2rem;
+    align-items:start;
+  }
+  @media (max-width:750px){ .edu-row{ grid-template-columns:1fr; } }
+  .timeline{
+    display:flex;
+    gap:1rem;
+  }
+  .dot{
+    width:10px; height:10px; border-radius:50%;
+    background:var(--gold);
+    margin-top:0.4rem;
+    flex-shrink:0;
+  }
+  .edu-year{ color:var(--gold); font-size:0.85rem; margin-bottom:0.3rem; }
+  .edu-title{ font-weight:600; margin-bottom:0.3rem; }
+  .edu-sub{ color:#5a6178; font-size:0.92rem; margin-bottom:0.3rem; }
+  .edu-note{ color:#5a6178; font-size:0.88rem; }
+  .edu-callout{
+    background:var(--card);
+    border-radius:6px;
+    padding:1.6rem;
+    font-weight:600;
+    font-size:1.02rem;
+  }
+  .edu-callout .rule{ width:40px; height:2px; background:var(--gold); margin-top:0.8rem; }
+
+  /* Showcase (extra section for Oak's IQC/CTF highlights) */
+  .showcase-item{
+    border-top:1px solid #ddd8c8;
+    padding:1.5rem 0;
+    display:grid;
+    grid-template-columns:1fr 2.4fr;
+    gap:1.5rem;
+  }
+  .showcase-item:last-child{ border-bottom:1px solid #ddd8c8; }
+  @media (max-width:650px){ .showcase-item{ grid-template-columns:1fr; } }
+  .showcase-meta{ color:var(--gold); font-size:0.85rem; font-weight:600; }
+  .showcase-title{ font-family:'Fraunces',serif; font-size:1.1rem; margin-bottom:0.4rem; }
+  .showcase-desc{ color:#5a6178; font-size:0.92rem; }
+
+  /* Contact */
+  footer{
+    background:var(--ink);
+    color:var(--paper);
+    padding:3.5rem 1.5rem 2.5rem 1.5rem;
+  }
+  .footer-inner{ max-width:900px; margin:0 auto; }
+  footer h2{ color:var(--paper); border-bottom-color:var(--gold); }
+  .footer-sub{ color:var(--muted); font-size:0.9rem; margin-bottom:2rem; }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1.5rem;
+  }
+  @media (max-width:750px){ .contact-grid{ grid-template-columns:repeat(2,1fr); } }
+  .contact-item a{
+    color:var(--paper);
+    text-decoration:none;
+  }
+  .contact-item .clabel{ font-weight:600; font-size:0.9rem; margin-bottom:0.2rem; }
+  .contact-item .cval{ color:var(--muted); font-size:0.85rem; word-break:break-word; }
+  .copyright{
+    border-top:1px solid var(--surface);
+    margin-top:3rem;
+    padding-top:1.5rem;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:0.6rem;
+    color:var(--muted);
+    font-size:0.82rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a class="nav-back" href="index.html">← Back</a>
+      <div class="nav-brand">OK</div>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hero" id="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Hi, I'm<span class="name">Oak</span></h1>
+      <div class="role">Computer Science Student at KMITL</div>
+      <p class="desc">Interested in Quantitative Finance and Cybersecurity Engineering — bridging data-driven strategy with real-world security.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">Contact Me</a>
+        <a class="btn btn-outline" href="#about">View My CV</a>
+      </div>
+      <div class="hero-social">
+        <a href="https://github.com/SoravitSaardchit/FWC-sosaardc.git" aria-label="GitHub">GitHub</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="mailto:oaklovejeentogether@bitkubeveryday.oak" aria-label="Email">Email</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <img class="hero-photo" src="img/oak.jpg" alt="Oak portrait — replace with your own photo">
+      <div class="hero-quote">"Compound knowledge, compound returns."</div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <h2>About Me</h2>
+  <div class="about-grid">
+    <img class="about-photo" src="img/oak.jpg" alt="Oak — replace with your own photo">
+    <div class="about-text">
+      <p>I'm Oak, a Computer Science student at King Mongkut's Institute of Technology Ladkrabang (KMITL). I compete in the WorldQuant International Quant Championship, building and simulating alpha strategies on the BRAIN platform, and I spend the rest of my time in cybersecurity — practicing penetration testing, OSINT, and network fundamentals on TryHackMe. I like problems that reward patience: markets and systems both punish you for skipping the fundamentals.</p>
+      <div class="meta-row">
+        <div class="meta-icon">🎓</div>
+        <div>
+          <div class="meta-label">Education</div>
+          <div class="meta-value">B.Sc. Computer Science, KMITL</div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-icon">📍</div>
+        <div>
+          <div class="meta-label">Location</div>
+          <div class="meta-value">Nonthaburi, Thailand</div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-icon">🎯</div>
+        <div>
+          <div class="meta-label">Interests</div>
+          <div class="meta-value">Quantitative Finance, Penetration Testing, OSINT, Network Security</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-quote">
+      "A small progress each day leads to big results."
+      <div class="rule"></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--card);">
+  <h2>Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">📈</div>
+      <div class="skill-title">Finance</div>
+      <div class="skill-desc">Quantitative Finance, Alpha Strategy</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧮</div>
+      <div class="skill-title">Quant</div>
+      <div class="skill-desc">Signal Design, Backtesting, BRAIN</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔢</div>
+      <div class="skill-title">Algorithms</div>
+      <div class="skill-desc">Data Structures, Problem Solving</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🛡️</div>
+      <div class="skill-title">Cybersecurity</div>
+      <div class="skill-desc">Pentest, OSINT, Network</div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <h2>Education</h2>
+  <div class="edu-row">
+    <div class="timeline">
+      <div class="dot"></div>
+      <div>
+        <div class="edu-year">2025 – Present</div>
+        <div class="edu-title">B.Sc. in Computer Science</div>
+        <div class="edu-sub">King Mongkut's Institute of Technology Ladkrabang (KMITL)</div>
+        <div class="edu-note">Relevant courses: Cybersecurity Fundamentals</div>
+      </div>
+    </div>
+    <div class="edu-callout">
+      Always learning, always improving.
+      <div class="rule"></div>
+    </div>
+  </div>
+</section>
+
+<section id="showcase" style="background:var(--card);">
+  <h2>Showcase</h2>
+  <div class="showcase-item">
+    <div class="showcase-meta">Competition</div>
+    <div>
+      <div class="showcase-title">WorldQuant IQC — Alpha Research</div>
+      <div class="showcase-desc">Built and simulated quantitative trading signals on the WorldQuant BRAIN platform, evaluating strategies by Sharpe ratio and turnover.</div>
+    </div>
+  </div>
+  <div class="showcase-item">
+    <div class="showcase-meta">Practice</div>
+    <div>
+      <div class="showcase-title">Offensive Security Fundamentals</div>
+      <div class="showcase-desc">Hands-on practice in penetration testing, OSINT reconnaissance, and network security concepts through platforms like TryHackMe.</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <h2>Contact</h2>
+    <p class="footer-sub">Feel free to reach out!</p>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <a href="mailto:oaklovejeentogether@bitkubeveryday.oak">
+          <div class="clabel">Email</div>
+          <div class="cval">oaklovejeentogether@bitkubeveryday.oak</div>
+        </a>
+      </div>
+      <div class="contact-item">
+        <a href="https://github.com/SoravitSaardchit/FWC-sosaardc.git" target="_blank" rel="noopener">
+          <div class="clabel">GitHub</div>
+          <div class="cval">github.com/SoravitSaardchit/FWC-sosaardc</div>
+        </a>
+      </div>
+      <div class="contact-item">
+        <a href="#">
+          <div class="clabel">Instagram</div>
+          <div class="cval">@oakhot</div>
+        </a>
+      </div>
+    </div>
+    <div class="copyright">
+      <div>© 2025 Oak. All rights reserved.</div>
+      <div>Built with ❤ using HTML &amp; CSS</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>
