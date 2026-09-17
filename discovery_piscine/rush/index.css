@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Portfolio — sosaardc &amp; skhaikun</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
+:root{
     --ink:#12151F;
     --paper:#F5F2EA;
     --blue:#4E9BFF;
@@ -56,6 +47,30 @@
     transition:color 0.2s ease;
   }
   .nav-links a:hover{ color:var(--paper); }
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:none;
+    color:var(--paper);
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  @media (max-width:640px){
+    .nav-links{
+      position:absolute;
+      top:100%; left:0; right:0;
+      background:var(--ink);
+      border-bottom:1px solid var(--surface);
+      flex-direction:column;
+      gap:0;
+      max-height:0;
+      overflow:hidden;
+      transition:max-height 0.25s ease;
+    }
+    .nav-links.open{ max-height:200px; }
+    .nav-links a{ display:block; padding:0.9rem 1.5rem; border-top:1px solid var(--surface); }
+    .nav-toggle{ display:block; }
+  }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -66,7 +81,7 @@
   }
   .kicker{
     font-size:0.78rem;
-    letter-spacing:0.12em;
+    letter-spacing:0.16em;
     color:var(--muted);
     margin-bottom:1.4rem;
   }
@@ -112,8 +127,8 @@
     align-items:center;
   }
   .card-photo{
-    width:96px;
-    height:96px;
+    width:110px;
+    height:110px;
     border-radius:50%;
     margin-bottom:1.2rem;
     object-fit:cover;
@@ -165,51 +180,9 @@
     width:60px;
     height:1px;
     background:var(--blue);
-    margin:1.2rem auto 0 auto;
+    margin:1.2rem auto 2rem auto;
   }
-</style>
-</head>
-<body>
-
-<nav>
-  <div class="nav-inner">
-    <div class="nav-brand">Our Portfolio</div>
-    <ul class="nav-links">
-      <li><a href="#top">Home</a></li>
-      <li><a href="#cards">Members</a></li>
-    </ul>
-  </div>
-</nav>
-
-<div class="hero" id="top">
-  <div class="kicker">WELCOME TO OUR</div>
-  <h1>Student <span class="accent-blue">Portfolio</span></h1>
-  <p class="lead">Two students. Different paths. Same drive.</p>
-  <p class="choose">Choose a portfolio to explore</p>
-</div>
-
-<div class="cards" id="cards">
-  <div class="card">
-    <img class="card-photo" src="https://via.placeholder.com/96x96.png?text=Oak" alt="Oak — sosaardc">
-    <div class="card-name">Oak</div>
-    <div class="card-role">Quant Finance &amp; Cybersecurity</div>
-    <div class="card-tags">Data Science · Pentest · OSINT</div>
-    <a class="card-btn blue" href="cv1.html">View Portfolio →</a>
-  </div>
-
-  <div class="card">
-    <img class="card-photo" src="https://via.placeholder.com/96x96.png?text=Jeen" alt="Jeen — skhaikun">
-    <div class="card-name">Jeen</div>
-    <div class="card-role">Computer Science Student</div>
-    <div class="card-tags">Cybersecurity · Backend · CTF</div>
-    <a class="card-btn pink" href="cv2.html">View Portfolio →</a>
-  </div>
-</div>
-
-<footer>
-  <p class="quote">"Better together, building a brighter future."</p>
-  <div class="rule"></div>
-</footer>
-
-</body>
-</html>
+  .copyright{
+    color:var(--muted);
+    font-size:0.8rem;
+  }
